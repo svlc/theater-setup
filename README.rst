@@ -158,4 +158,4 @@ GPLv3
 
 Authors
 -------
-* S. Vlcek <svlc at inventati.org>
+* S\. Vlcek <svlc at inventati.org>
