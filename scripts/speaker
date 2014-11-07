@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function usage()
+{
+	printf "Switch sound output between a tv and a pc speakers\n"
+	printf "by changing mplayer's configuration files.\n"
+	printf "Usage: %s [pc|tv]\n" "$(basename "$0")";
+	exit "$1";
+}
+
+function main()
+{
+	if [ "$#" -ne "1" ]; then
+		printf "error: a wrong number of arguments.\n"
+		exit 1;
+	fi
+
+	if [ "$1" = "-h" ]; then
+		usage 0
+	elif [ "$1" = "tv" ]; then
+		TARG_NAME="config-tv"
+	elif [ "$1" = "pc" ]; then
+		TARG_NAME="config-pc"
+	else
+		printf "error: an unrecognized argument.\n"
+		exit 1
+	fi
+
+	ln -s -f ~/.mplayer/"$TARG_NAME" ~/.mplayer/config;
+}
+
+main "$@"
+exit 0;

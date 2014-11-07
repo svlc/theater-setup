@@ -1,0 +1,31 @@
+#!/bin/bash
+
+function usage() {
+	printf "Turn the tv connection on/off by invoking xrandr command.\n"
+	printf "Usage: %s [start|stop]\n" "$(basename "$0")";
+	exit "$1";
+}
+
+function main()
+{
+	if [ "$#" -ne "1" ]; then
+		printf "error: a wrong number of arguments.\n"
+		exit 1;
+	fi
+
+	if [ "$1" = "-h" ]; then
+		usage 0
+	elif [ "$1" = "stop" ]; then
+		# turn the tv screen off
+		xrandr --verbose --output DVI-0 --auto --output HDMI-0 --off;
+	elif [ "$1" = "start" ]; then
+		# put a tv screen next to the monitor screen
+		xrandr --verbose --output DVI-0 --auto --output HDMI-0 --auto --right-of DVI-0;
+	else
+		printf "error: an unrecognized argument.\n"
+		exit 1;
+	fi
+
+}
+main "$@"
+exit 0;
