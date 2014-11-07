@@ -116,7 +116,7 @@ Install
 Configure
 #########
 Now when the installed files have the right path structure, make a changes
-so that the scripts and configuration files suites your machine, especially:
+so that the scripts and configuration files suite your machine, especially:
 
 * tv -- modify options of ``xrandr``
 * .mplayer/config-tv -- modify audio output options (line starting with ``ao``)
