@@ -27,7 +27,7 @@ Features
 Typical use case
 ================
 You have a ``Linux``-based computer connected to a TV and you need
-to setup an simple environment that can be used by people without
+to setup a simple environment that can be used by people without
 an IT background.
 
 These common users may then redirect a video output to the TV screen
