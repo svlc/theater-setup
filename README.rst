@@ -44,7 +44,7 @@ Scripts
 
 mplayer configuration files
 ===========================
-* important for controlling of sound output switching
+* important for redirecting of sound output
 
 Icons
 =====
