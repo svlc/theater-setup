@@ -1,6 +1,10 @@
 *************
 theater-setup
 *************
+
+.. image:: figures/theater_setup.png
+   :align: center
+
 .. contents:: `Table Of Contents`
     :depth: 2
 
