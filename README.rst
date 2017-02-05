@@ -89,6 +89,14 @@ This tree shows where the distributed files should end up.
               ├── tv
               ├── speaker
               └── submplay
+      └── share
+          └── icons
+              └── hicolor
+                  └── {16x16,32x32,48x48,64x64,96x96,128x128,192x192,256x256,512x512}
+                      ├── theater-setup-speaker-pc.png
+                      ├── theater-setup-speaker-tv.png
+                      ├── theater-setup-tv-start.png
+                      └── theater-setup-tv-stop.png
 
 Installation steps
 ==================
@@ -113,9 +121,16 @@ Install
 
 .. code:: bash
 
-  # optionally copy the icons on the user's desktop
+  # optionally install the desktop entries to the Desktop
   $ install -m 644 shortcuts/{speaker-pc,speaker-tv,tv-start,tv-stop}.desktop "$HOME"/Desktop
 
+.. code:: bash
+
+  # optionally install the icons for the desktop entries
+  # invoke under root
+  $ for dir in "16x16" "32x32" "48x48" "64x64" "96x96" "128x128" "192x192" "256x256" "512x512"; do \
+      install -D -m 644 icons/${dir}/theater-setup-{speaker-pc,speaker-tv,tv-stop,tv-start}.png "/usr/share/icons/hicolor/${dir}/apps/"; \
+    done;
 
 Configure
 #########
@@ -150,7 +165,6 @@ Prepare some video files with a corresponding subtitles and test a setup environ
 
 TODO
 ----
-* set icons for the ``.desktop`` files
 * create a wallpaper(s) with instructions and ``mplayer`` shortcuts on it
 * create a printable sheet with shortcuts
 * add some screenshots and photos
