@@ -3,6 +3,5 @@ Exec=tv start
 Icon=theater-setup-tv-start
 MimeType=
 Name=tv-start
-Path=
 Terminal=false
 Type=Application

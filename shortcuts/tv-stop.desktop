@@ -3,6 +3,5 @@ Exec=tv stop
 Icon=theater-setup-tv-stop
 MimeType=
 Name=tv-stop
-Path=
 Terminal=false
 Type=Application

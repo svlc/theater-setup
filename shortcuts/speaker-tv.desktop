@@ -3,6 +3,5 @@ Exec=speaker tv
 Icon=theater-setup-speaker-tv
 MimeType=
 Name=speaker-tv
-Path=
 Terminal=false
 Type=Application
