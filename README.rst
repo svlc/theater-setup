@@ -117,7 +117,7 @@ Install
 .. code:: bash
 
   # install mplayer configuration file (possibly backing the existing config up)
-  $ install -b --suffix=".old" -D -m 644 mplayer/{config-pc,config-tv,input.conf} "$HOME"/.mplayer/
+  $ install -b --suffix=".old" -D -m 644 mplayer/{config,input.conf} "$HOME"/.mplayer/
 
 .. code:: bash
 
