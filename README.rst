@@ -21,6 +21,10 @@ operational on other machines.
 
 A configuration is recommended to experienced ``UNIX`` users only.
 
+.. image:: figures/screenshot_1_small.png
+   :height: 200px
+   :target: figures/screenshot_1.png
+
 Features
 ========
 * easy to use for a common computer users
@@ -164,7 +168,6 @@ TODO
 ----
 * create a wallpaper(s) with instructions and ``mplayer`` shortcuts on it
 * create a printable sheet with shortcuts
-* add some screenshots and photos
 
 License
 -------

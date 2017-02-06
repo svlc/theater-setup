@@ -12,6 +12,8 @@ HTML_FILES = $(patsubst %.rst,%.html,$(IN_FILES))
 PDF_FILES = $(patsubst %.rst,%.pdf,$(IN_FILES))
 SVG_FILES = $(wildcard figures/*.svg)
 PNG_FILES = $(patsubst %.svg,%.png,$(SVG_FILES))
+SCREEN_FILES = $(wildcard figures/screenshot_[1-9].png)
+SCREEN_THUMB_FILES = $(patsubst %.png,%_small.png,$(SCREEN_FILES))
 
 prefix = /usr/local
 datarootdir = $(prefix)/share
@@ -19,7 +21,7 @@ exec_prefix = $(prefix)
 bindir = $(exec_prefix)/bin
 
 .PHONY: all clean
-all   : $(PNG_FILES) $(HTML_FILES) $(PDF_FILES)
+all   : $(SCREEN_THUMB_FILES) $(PNG_FILES) $(HTML_FILES) $(PDF_FILES)
 
 installdirs:
 	mkdir -p $(DESTDIR)$/$(bindir)
@@ -50,6 +52,9 @@ png:	 $(PNG_FILES)
 
 %.png: %.svg
 	inkscape -f $< -e $(@) --export-width=400;
+
+%_small.png: %.png
+	convert -resize "x200^" -gravity center -crop "x200+0+0" -extent "x200" $(<) $(@)
 
 %.pdf: %.rst
 	rst2pdf $(<)
