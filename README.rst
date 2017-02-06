@@ -71,7 +71,7 @@ Tree structure
 
 This tree shows where the distributed files should end up.
 
-.. code:: bash
+.. code::
 
   ├── home 
       └── $USER
