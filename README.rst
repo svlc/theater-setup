@@ -43,12 +43,8 @@ Description
 Scripts
 =======
 * tv [start|stop] -- turn a HDMI-connected tv on/off by using xrandr
-* speaker [pc|tv] -- switch sound output between a PC and a TV speakers (by setting ``.mplayer/config``)
+* speaker [pc|tv] -- switch sound output between a PC and a TV speakers
 * submplay VIDEO_FILE -- wrapper for mplayer with automatic subtitle lookout
-
-mplayer configuration files
-===========================
-* important for redirecting of sound output
 
 Icons
 =====
@@ -64,6 +60,7 @@ Dependencies
 
 * xrandr
 * mplayer
+* pulseaudio
 
 Tree structure
 ==============
@@ -75,8 +72,7 @@ This tree shows where the distributed files should end up.
   ├── home 
       └── $USER
           └── .mplayer
-              ├── config-pc
-              ├── config-tv
+              ├── config
               └── input.conf
           └── Desktop
               ├── speaker-tv.desktop
@@ -138,7 +134,8 @@ Now when the installed files have the right path structure, make a changes
 so that the scripts and configuration files suite your machine, especially:
 
 * tv -- modify options of ``xrandr``
-* .mplayer/config-tv -- modify audio output options (line starting with ``ao``)
+* .mplayer/config
+* speaker -- assign ``$tv_sink`` and ``$pc_sink`` variables
 
 Tweak display manager
 #####################
@@ -168,7 +165,6 @@ TODO
 * create a wallpaper(s) with instructions and ``mplayer`` shortcuts on it
 * create a printable sheet with shortcuts
 * add some screenshots and photos
-* redirect sound output at system level (instead of at mplayer's level which requires restart of mplayer)
 
 License
 -------

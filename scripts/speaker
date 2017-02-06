@@ -1,9 +1,7 @@
 #!/bin/bash
 
-function usage()
-{
-	printf "Switch sound output between a tv and a pc speakers\n"
-	printf "by changing mplayer's configuration files.\n"
+function usage() {
+	printf "Switch between pc and tv sound outputs on a pulseaudio level .\n"
 	printf "Usage: %s [pc|tv]\n" "$(basename "$0")";
 	exit "$1";
 }
@@ -15,18 +13,46 @@ function main()
 		exit 1;
 	fi
 
+	tv_sink="alsa_output.pci-0000_01_00.1.hdmi-stereo"
+	pc_sink="alsa_output.pci-0000_00_1b.0.analog-stereo"
+	wanted_sink=""
+
 	if [ "$1" = "-h" ]; then
-		usage 0
-	elif [ "$1" = "tv" ]; then
-		TARG_NAME="config-tv"
+		usage 0;
 	elif [ "$1" = "pc" ]; then
-		TARG_NAME="config-pc"
+		wanted_sink="$pc_sink"
+	elif [ "$1" = "tv" ]; then
+		wanted_sink="$tv_sink"
 	else
 		printf "error: an unrecognized argument.\n"
-		exit 1
+		exit 1;
 	fi
 
-	ln -s -f ~/.mplayer/"$TARG_NAME" ~/.mplayer/config;
+	# find if the cache for "module-stream-restore" is turned off
+	# https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/DefaultDevice/
+	ret=$(pacmd list-modules | sed -r -n '{/name: <module-stream-restore>/,/argument:/!d; /argument:\s*<restore_device=false>/p }')
+
+	# if the cache is on
+	if [ -z "$ret" ]; then
+		pacmd "unload-module module-stream-restore"
+		pacmd "load-module" "module-stream-restore" "restore_device=false"
+	fi
+
+	pacmd "set-default-sink" "$wanted_sink"
+
+	# find all indexes that are not redirected to our $wanted_sink
+	# 1.) if "index:" string matches, save it to the hold space and end a cycle
+	# 2.) if "sink:" string does not match, end a cycle
+	# 3.) if our $wanted_sink string matches, end a cycle
+	# 4.) put our hold space to the pattern space
+	# 5.) remove all but digits from the pattern space and print it
+	#                                                    1.)              2.)         3.)              4.) 5.)
+	active_inputs=$( pacmd list-sink-inputs | sed -r -n '/index:/{h;b}; {/sink:/!b; /'$wanted_sink'/b; g;  s/[^0-9]+//p}' );
+
+	# redirect all relevant inputs to the wanted sink
+	for input in $active_inputs; do
+		pacmd "move-sink-input" "$input" "$wanted_sink"
+	done;
 }
 
 main "$@"

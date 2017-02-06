@@ -14,8 +14,6 @@ subcp=utf-8
 zoom=yes
 noautosub=yes # disable automatic sub loading
 
-ao=alsa:noblock:device=hw=1.3 # enable sound from a tv repro
-
 vf-add=expand=-40:0:-1:-1
 
 ass=yes
