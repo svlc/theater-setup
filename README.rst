@@ -122,7 +122,7 @@ Install
 .. code:: bash
 
   # optionally install the desktop entries to the Desktop
-  $ install -m 644 shortcuts/{speaker-pc,speaker-tv,tv-start,tv-stop}.desktop "$HOME"/Desktop
+  $ install -m 744 shortcuts/{speaker-pc,speaker-tv,tv-start,tv-stop}.desktop "$HOME"/Desktop
 
 .. code:: bash
 
