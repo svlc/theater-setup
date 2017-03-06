@@ -43,9 +43,9 @@
      inkscape:window-height="879"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="0.29236273"
-     inkscape:cx="351.18665"
-     inkscape:cy="-54.931566"
+     inkscape:zoom="0.13405257"
+     inkscape:cx="698.36345"
+     inkscape:cy="899.11795"
      inkscape:window-x="0"
      inkscape:window-y="19"
      inkscape:window-maximized="0"
@@ -295,7 +295,7 @@
        id="flowPara4805-2"
        style="font-weight:bold;font-size:74.66666412px">L2 button</flowPara></flowRoot>  <path
      style="fill:none;fill-rule:evenodd;stroke:#999999;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="M 874.11187,690.89667 711.60019,1023.1515"
+     d="M 874.11187,690.89667 719.05995,1011.9619"
      id="path4795-5-9"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cc" />
@@ -339,7 +339,7 @@
      ry="16.620314" />
   <path
      style="fill:none;fill-rule:evenodd;stroke:#999999;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="M 581.34162,615.00465 280.3078,1034.2965"
+     d="M 560.82728,601.0176 286.83509,1009.586"
      id="path4795-5-9-6"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cc" />
@@ -392,7 +392,7 @@
      r="98.143013" />
   <path
      style="fill:none;fill-rule:evenodd;stroke:#999999;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="M 554.29669,220.93681 749.62561,462.44888"
+     d="M 525.39012,205.08482 749.62561,462.44888"
      id="path4795-5-9-2-9"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cc" />
@@ -400,7 +400,7 @@
      xml:space="preserve"
      id="flowRoot4799-3-1-9-1-2"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.25px;line-height:125%;font-family:Sans;-inkscape-font-specification:'Sans, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     transform="translate(-1985.6286,-1127.9714)"><flowRegion
+     transform="translate(-1919.6286,-1127.9714)"><flowRegion
        id="flowRegion4801-5-2-3-8-2"
        style="line-height:125%"><rect
          id="rect4803-6-7-6-7-8"
@@ -414,13 +414,13 @@
        style="font-weight:bold;font-size:74.66666412px;line-height:125%"
        id="flowPara5060">right</flowPara><flowPara
        style="font-weight:bold;font-size:74.66666412px;line-height:125%"
-       id="flowPara5062">bottom</flowPara><flowPara
+       id="flowPara5062">down</flowPara><flowPara
        style="font-weight:bold;font-size:74.66666412px;line-height:125%"
        id="flowPara5064">left</flowPara></flowRoot>  <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path5079"
-     d="m 1077.5572,631.0128 131.1456,266.38605"
+     d="m 1077.5572,631.0128 67.7376,283.17051"
      style="fill:none;fill-rule:evenodd;stroke:#999999;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   <flowRoot
      xml:space="preserve"

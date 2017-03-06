@@ -55,7 +55,10 @@ pdf:	$(PDF_FILES)
 
 png:	 $(PNG_FILES)
 
-%.png: %.svg
+figures/ps3_navigation_controller.png: figures/ps3_navigation_controller.svg
+	inkscape -f $< -e $(@) --export-width=600;
+
+figures/theater_setup.png: figures/theater_setup.svg
 	inkscape -f $< -e $(@) --export-width=400;
 
 %_small.png: %.png

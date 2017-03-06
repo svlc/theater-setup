@@ -379,7 +379,7 @@ Configure
         * **action**
         * **keyboard mapping**
         * **comment**
-      + * up/bottom
+      + * up/down
         * volume up/down
         * up/down
         *
@@ -398,7 +398,7 @@ Configure
       + * PS button
         * unchanged
         *
-        * turn the controller on/turn the controller down (if pressed for 10+ secs)
+        * turn the controller on, turn the controller off (if pressed for 10+ secs)
       + * L1 button
         * pause
         * space
@@ -419,7 +419,7 @@ Configure
         * none
         *
         *
-      + * stick top
+      + * stick up
         * none
         *
         *
