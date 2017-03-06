@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=controller stop
+Icon=theater-setup-controller-stop
+MimeType=
+Name=controller-stop
+Terminal=false
+Type=Application

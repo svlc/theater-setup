@@ -1,0 +1,177 @@
+#! /usr/bin/env bash
+
+function usage() {
+	printf "Turn the tv connection on/off by invoking xrandr command.\n"
+	printf "Usage: %s [start|stop]\n" "$(basename "$0")";
+	exit "$1";
+}
+
+function connect()
+{
+	bt_card_mac_addr=$1
+	controller_mac_addr=$2
+
+	expect <<EOF
+
+spawn bluetoothctl
+
+set timeout 3
+
+expect {
+    -re "$bt_card_mac_addr.*" { return; }
+    default {
+	spawn zenity --timeout=10 --info "--text=Bluetooth adapter with MAC address \"$bt_card_mac_addr\" is not present.";
+	wait
+	exit 1
+    }
+}
+
+send "select $bt_card_mac_addr\r"
+sleep 0.5
+
+send "power on\r"
+expect {
+    -re "succeeded.*" { return; }
+    default {
+	spawn zenity --timeout=10 --info "--text=\"Power on\" command failed.";
+	wait
+	exit 1
+    }
+}
+
+send "info $controller_mac_addr\r"
+expect {
+    -re "Connected: no.*" { return; }
+    -re "Connected: yes.*" {
+	spawn zenity --timeout=10 --info "--text=Controller is already connected!";
+	wait
+	exit 1
+    }
+}
+
+send "agent on\r"
+expect {
+    -re "registered.*" { return; }
+    default {
+	spawn zenity --timeout=10 --info "--text=\"Power on\" command failed.";
+	wait
+	exit 1
+    }
+}
+
+send "default-agent\r"
+expect {
+    -re "successful.*" { return; }
+    default {
+	spawn zenity --timeout=10 --info "--text=\"default-agent\" command failed.";
+	wait
+	exit 1
+    }
+}
+
+set spawn_id_main \$spawn_id
+
+spawn zenity --timeout=20 --info "--text=Turn the controller on."
+
+set spawn_id_zenity \$spawn_id
+set spawn_id \$spawn_id_main
+
+set timeout 20
+expect {
+    -re "Connected: yes.*" 
+    {
+	close -i \$spawn_id_zenity;
+	wait -i \$spawn_id_zenity;
+
+	spawn zenity --timeout=20 --info "--text=Connection is on.";
+	set spawn_id_zenity \$spawn_id
+	set spawn_id \$spawn_id_main
+	return;
+    }
+    default {
+	spawn zenity --timeout=10 --info "--text=Time is out, connection failed. Try again.";
+	wait
+	exit 1
+    }
+}
+
+send "quit\r"
+expect eof
+wait -i \$spawn_id_zenity;
+
+EOF
+
+
+	if [ "$?" -eq 0 ]; then
+		antimicro --tray --profile /usr/local/etc/antimicro_controller.amgp &
+	fi
+}
+
+function disconnect()
+{
+    bt_card_mac_addr=$1
+    controller_mac_addr=$2
+
+    expect <<EOF
+
+spawn bluetoothctl
+
+
+set timeout 3
+expect {
+    -re "$bt_card_mac_addr.*" { return; }
+    default {
+	spawn zenity --timeout=10 --info "--text=Bluetooth adapter with MAC address \"$bt_card_mac_addr\" is not present.";
+	wait
+	exit 1
+    }
+}
+
+sleep 0.5
+set timeout 8
+send "disconnect $controller_mac_addr\r"
+
+expect {
+    -re "Connected: no.*" { spawn zenity --timeout=10 --info "--text=Controller disconnected."; }
+    default {
+	spawn zenity --timeout=10 --info "--text=Disconnecting of the controller failed.";
+	wait
+	exit 1
+    }
+}
+
+send "quit\r"
+expect eof
+
+EOF
+
+	if [ -n "$(pgrep antimicro)" ]; then
+        killall antimicro;
+    fi;
+
+}
+
+function main()
+{
+	if [ "$#" -ne "1" ]; then
+		printf "error: a wrong number of arguments.\n"
+		exit 1;
+	fi
+
+	bt_card_mac_addr="5C:F3:70:6C:2E:8B"
+	controller_mac_addr="00:07:04:EF:38:C3"
+
+	if [ "$1" = "-h" ]; then
+		usage 0
+	elif [ "$1" = "stop" ]; then
+		disconnect $bt_card_mac_addr $controller_mac_addr
+	elif [ "$1" = "start" ]; then
+		connect $bt_card_mac_addr $controller_mac_addr
+	else
+		printf "error: an unrecognized argument.\n"
+		exit 1;
+	fi
+}
+
+main "$@"
+exit 0;

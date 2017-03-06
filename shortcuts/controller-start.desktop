@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=controller start
+Icon=theater-setup-controller-start
+MimeType=
+Name=controller-start
+Terminal=false
+Type=Application
