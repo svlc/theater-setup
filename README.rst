@@ -120,7 +120,9 @@ This tree shows where the distributed files should end up.
                       ├── theater-setup-speaker-pc.png
                       ├── theater-setup-speaker-tv.png
                       ├── theater-setup-tv-start.png
-                      └── theater-setup-tv-stop.png
+                      ├── theater-setup-tv-stop.png
+                      ├── [theater-setup-controller-start.png]
+                      └── [theater-setup-controller-stop.png]
 
 Installation steps
 ==================
