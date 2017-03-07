@@ -377,7 +377,6 @@ Configure
    .. image:: figures/ps3_navigation_controller.png
 
    .. list-table::
-      :widths: 1 4 2 3
 
       + * **button**
         * **action**
@@ -392,7 +391,7 @@ Configure
         * left/right
         *
       + * × button
-        * toggle fulscreen mode
+        * toggle fullscreen mode
         * 'f'
         *
       + * ◎ button
