@@ -322,7 +322,8 @@ Setup a trusted bluetooth connection
    [bluetooth]# exit
    [DEL] Controller 5C:F3:70:6C:2E:8B system [default]
 
-Now you can edit the variables in the ``controller`` script (located in ``scripts/`` directory) and test it.
+Now you can edit the definition of ``$bash_adapter_mac_addr`` and ``$bash_controller_mac_addr`` variables
+in the ``controller`` script (located in ``scripts/`` directory) and test it.
 
 Note
 ~~~~
