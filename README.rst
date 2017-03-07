@@ -418,15 +418,15 @@ Configure
         * move active window to the monitor on the right
         * ctrl-super_l-right
         * works in Cinnamon desktop environment
-      + * L3 button
-        * none
-        *
-        *
       + * stick up
         * none
         *
         *
       + * stick down
+        * none
+        *
+        *
+      + * L3 button
         * none
         *
         *
