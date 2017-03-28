@@ -52,6 +52,20 @@ Scripts
 * submplay VIDEO_FILE -- wrapper for mplayer with automatic subtitle lookout
 * controller [start|stop] -- turn a bluetooth controller on/off
 
+
+movewin
+#######
+The script ``movewin`` moves application windows across your screen.
+
+.. code:: bash
+
+  # move all mplayer instances to a monitor on the right
+  movewin --window mplayer --monitor ":RIGHT:"
+  # move the currently active window 200 pixels to the right and 10% up
+  movewin --window ":ACTIVE:" --shift "200x-10%"
+
+For more info invoke :code:`movewin --help`.
+
 Icons
 =====
 * icons are to be put on user's desktop to allow clickable management of tv, speakers and remote controller
@@ -85,6 +99,7 @@ Bluetooth remote controller dependencies
 * zenity
 * antimicro (software for managing mappings of your remote controller)
 * bluez (bluetooth stack), bluez-utils
+* pygobject (python bindings for GObject library)
 
 
 Tree structure
@@ -110,7 +125,8 @@ This tree shows where the distributed files should end up.
               ├── tv
               ├── speaker
               ├── submplay
-              └── [controller]
+              ├── [controller]
+              └── [winmove]
           └── etc
               └── [antimicro_controller.amgp]
       └── share
@@ -342,7 +358,7 @@ Install
 .. code:: bash
 
    # invoke under root
-   install -D -m 755 scripts/controller /usr/local/bin/
+   install -D -m 755 scripts/{controller,movewin} /usr/local/bin/
 
 .. code:: bash
 
@@ -412,12 +428,12 @@ Configure
         *
       + * stick left
         * move active window to the monitor on the left
-        * ctrl-super_l-left
-        * works in Cinnamon desktop environment
+        * none
+        * invokes :code:`movewin --window ":ACTIVE:" --monitor ":LEFT:"`
       + * stick right
         * move active window to the monitor on the right
-        * ctrl-super_l-right
-        * works in Cinnamon desktop environment
+        * none
+        * invokes :code:`movewin --window ":ACTIVE:" --monitor ":RIGHT:"`
       + * stick up
         * none
         *

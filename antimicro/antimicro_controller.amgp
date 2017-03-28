@@ -11,32 +11,18 @@
                 <axisbutton index="1">
                     <slots>
                         <slot>
-                            <code>0x1000020</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x1000022</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x1000012</code>
-                            <mode>keyboard</mode>
+                            <path>/usr/local/bin/movewin</path>
+                            <arguments>--window &quot;:ACTIVE:&quot; --monitor &quot;:LEFT:&quot;</arguments>
+                            <mode>execute</mode>
                         </slot>
                     </slots>
                 </axisbutton>
                 <axisbutton index="2">
                     <slots>
                         <slot>
-                            <code>0x1000020</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x1000022</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x1000014</code>
-                            <mode>keyboard</mode>
+                            <path>/usr/local/bin/movewin</path>
+                            <arguments>--window &quot;:ACTIVE:&quot; --monitor &quot;:RIGHT:&quot;</arguments>
+                            <mode>execute</mode>
                         </slot>
                     </slots>
                 </axisbutton>

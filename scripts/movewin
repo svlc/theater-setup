@@ -1,0 +1,500 @@
+#! /usr/bin/env python3
+
+# TODO: in case of multiple windows, call "ps" subprocess just once
+# TODO: when window is in fullscreen mode, the program behaviour is not correct (e.g. with mplayer)
+# TODO: normalize_window() should be more sophisticated
+# TODO: better --verbose and error output, exception handling, ...
+
+import sys, os
+from optparse import OptionParser
+import subprocess
+from enum import Enum
+import math
+
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+gi.require_version('Wnck', '3.0')
+from gi.repository import Wnck
+
+gi.require_version('Gdk', '3.0')	
+from gi.repository import Gdk;
+
+class CustomOptionParser(OptionParser):
+    def format_epilog(self, formatter):
+        return self.epilog
+
+class MonitorType(Enum):
+	DIRECTION = 0
+	NEXT = 1
+	UINT = 2
+
+class ValueType(Enum):
+	PIXELS = 0
+	PERCENTS = 1
+
+class DirectionType(Enum):
+	UP = (0, -20)
+	RIGHT = (20, 0)
+	DOWN = (0, 20)
+	LEFT = (-20, 0)
+
+# using deprecated optparse instead of buggy argparse (https://bugs.python.org/issue9334)
+def parse_argv():
+	epilog="""
+<direction> := ":UP:" | ":RIGHT:" | ":DOWN:" | ":LEFT:"
+<int> := integer
+<uint> := unsigned integer
+<value> := <int> | <int>"%"
+
+EXAMPLES:
+  {0} --window ":ACTIVE:" --shift "200x0"
+  {0} --window audacious --shift "20%x-30%"
+  {0} --window mplayer --shift ":LEFT:"
+  {0} --window mplayer --monitor ":RIGHT:"
+  {0} --window mplayer --monitor "0"
+  {0} --window mplayer --monitor ":NEXT:"
+""".format(sys.argv[0])
+
+	p = CustomOptionParser(usage="%prog --window WINDOW"
+					 + " {--shift SHIFT_VALUE | --monitor MONITOR_VALUE}", epilog=epilog)
+	p.add_option('--window', dest='window',
+				 metavar='{<process_name> | :ACTIVE:}',
+				 type=str, help='Choose window(s) that will be moved.')
+	p.add_option('--shift', dest='shift', metavar='{<value>x<value> | <direction>}',
+				 type=str,
+                 help='Specify shift.')
+	p.add_option('--monitor', dest='monitor', metavar='{<direction> | :NEXT: | <uint>}',
+				 type=str,
+                 help='Define a shift to a specific monitor.')
+	p.add_option('--norm', action='store_true', dest='norm', default=False,
+				 help='Enable window normalization after movement so that '
+				 + 'windows are always fully visible on the screen.')
+	p.add_option('--verbose', action='store_true', default=False, help='Turn on verbose mode.')
+
+	opts, args = p.parse_args()
+
+	if not opts.window:
+		p.error("Missing --window option.")
+
+	if opts.shift and opts.monitor:
+		p.error("options --shift and --monitor are mutually exclusive")
+	if not opts.shift and not opts.monitor:
+		p.error("Missing --shift or --monitor option.")
+
+	if len(args) > 0:
+		p.error(str(args) + " unrecognized.")
+
+	if opts.verbose:
+		print("opts:", opts, "args:", args)
+	return opts;
+
+def generate_monitor_dict(m_geo):
+	x_left = m_geo.x
+	x_right = m_geo.x + m_geo.width
+	x_middle = int((x_left + x_right) / 2)
+	y_top = m_geo.y
+	y_bottom = m_geo.y + m_geo.height
+	y_middle = int((y_top + y_bottom) / 2)
+	d = {
+		"xl": x_left, "xm": x_middle, "xr": x_right,
+		"yt": y_top, "ym": y_middle, "yb": y_bottom,
+		"w": m_geo.width, "h": m_geo.height
+	}
+	return d
+
+def get_monitor_data_gdk_lt_v22():
+
+	display = Gdk.Display.get_default()
+	screen = display.get_default_screen()
+
+	mon_cnt = screen.get_n_monitors()
+
+	monitors = []
+
+	for mon_id in range(mon_cnt):
+		m_geo = screen.get_monitor_geometry(mon_id)
+		monitors.append(generate_monitor_dict(m_geo))
+
+	return monitors
+
+def get_monitor_data_gdk_ge_v22():
+
+	display = Gdk.Display.get_default()
+	# note that gdk has just one screen concept
+	screen = display.get_default_screen()
+
+	mon_cnt = display.get_n_monitors()
+
+	monitors = []
+
+	for mon_id in range(mon_cnt):
+		m_geo = display.get_monitor(mon_id).get_geometry()
+		monitors.append(generate_monitor_dict(m_geo))
+
+	return monitors
+
+def generate_window_dict(w):
+	geo = w.get_geometry()
+	geo_wo_frame = w.get_client_window_geometry()
+	l_frame = geo.xp - geo_wo_frame.xp
+	t_frame = geo.yp - geo_wo_frame.yp
+
+	d = {
+		"w": geo.widthp, "h": geo.heightp,
+		"x": geo.xp, "y": geo.yp, "xid": w.get_xid(),
+		"t_frame": t_frame, "l_frame": l_frame,
+		"pid": w.get_pid(), "wnck_w": w
+	}
+	return d;
+
+def get_windows(window_name, verbose):
+ 
+	screen = Wnck.Screen.get_default()
+	screen.force_update()
+
+	windows = []
+	if window_name == ':ACTIVE:':
+		w = screen.get_active_window()
+		if w:
+			d = generate_window_dict(w)
+			windows.append(d)
+			if verbose:
+				print(d)
+	else:
+		all_windows = screen.get_windows()
+		for w in all_windows:
+			pid = w.get_pid()
+			try:
+				p_name = subprocess.check_output(["ps", "-q", str(pid), "-o" ,"comm="])
+			# occurs if process already exited
+			except subprocess.CalledProcessError:
+				continue
+
+			p_name = p_name.rstrip().decode("utf-8")
+
+			if window_name == p_name:
+				d = generate_window_dict(w)
+				windows.append(d)
+				if verbose:
+					print(d)
+					print("pid: ", pid, ", name: ", p_name, sep='')
+	return windows, screen
+
+def compute_screen_resolution(monitors):
+	max_w, max_h = 0, 0
+	for m in monitors:
+		w = m['w'] + m['xl']
+		h = m['h'] + m['yt']
+		if w > max_w:
+			max_w = w
+		if h > max_h:
+			max_h = h
+
+	return max_w, max_h
+
+# avoid using Wnck.Window.set_geometry(), that does not work with some WMs
+# note that xdotool accepts x/y position without frames/decorations
+def move_window(pos, xid, verbose):
+
+		ls = ['xdotool',
+			  'windowmove', str(xid),
+			  str(pos[0]),
+			  str(pos[1]) ]
+		if verbose:
+			print(ls)
+		subprocess.call(ls)
+
+def parse_monitor_value(value):
+	if value == ":NEXT:":
+		return MonitorType.NEXT, None
+	elif ":" in value:
+		d = parse_direction(value)
+		return MonitorType.DIRECTION, d
+	else:
+		return MonitorType.UINT, int(value)
+
+	raise Exception(value, "is invalid.")
+
+def parse_percent_value(value):
+	return int(value[:-1])
+
+def parse_direction(value):
+
+	dir = {":LEFT:": DirectionType.LEFT, ":RIGHT:": DirectionType.RIGHT,
+		   ":UP:": DirectionType.UP, ":DOWN:": DirectionType.DOWN }
+
+	if value not in dir:
+		raise Exception("Value \"" + value + "\" is invalid.")
+	return dir[value]
+
+def parse_shift_value(value):
+
+	x_pair = { "tp": ValueType.PERCENTS, "val": 0 }
+	y_pair = { "tp": ValueType.PERCENTS, "val": 0 }
+	if "x" in value:
+		first, second = value.split(sep='x')
+		if '%' == first[-1]:
+			x_pair['val'] = parse_percent_value(first)
+		else:
+			x_pair = { "tp": ValueType.PIXELS, "val": int(first) }
+		if '%' == second[-1]:
+			y_pair['val'] = parse_percent_value(second)
+		else:
+			y_pair = { "tp": ValueType.PIXELS, "val": int(second) }
+	else:
+		dir = parse_direction(value)
+		x_pair['val'], y_pair['val'] = dir.value
+	return x_pair, y_pair
+
+# get size of line segment intersection and line segment distance (all in 1-D)
+# returns pair "(size, distance)"
+def get_size_of_segment_intersection_and_segment_dist(seg1, seg2):
+	p1, p2, p3, p4 = sorted((seg1[0], seg1[1], seg2[0], seg2[1]))
+	if (p1 == seg1[0] and p2 == seg1[1]) or (p1 == seg2[0] and p2 == seg2[1]):
+		# not overlapping
+		return 0, abs(p2 - p3)
+	return abs(p2 - p3), 0
+
+def get_distance_of_two_non_overlapping_rectangles(r1, r2):
+	x_dist = get_size_of_segment_intersection_and_segment_dist((r1['xl'], r1['xr']), (r2['xl'], r2['xr']))[1]
+	y_dist = get_size_of_segment_intersection_and_segment_dist((r1['yt'], r1['yb']), (r2['yt'], r2['yb']))[1]
+	dist = math.sqrt(x_dist**2 + y_dist**2)
+	return dist
+
+# Get monitor where the window resides or monitor that is closest to the window
+# returns pair "(id of monitor, overlapping?)"
+def get_monitor_where_window_is(w, monitors):
+
+	# best overlapping area
+	best_ol_area = 0
+	best_m_id = None
+	half_w_area = w['w'] * w['h'] / 2
+
+	for m_id, m in enumerate(monitors):
+		x_size = get_size_of_segment_intersection_and_segment_dist((w['x'], w['x'] + w['w']),
+																   (m['xl'], m['xr']))[0]
+		if x_size:
+			y_size = get_size_of_segment_intersection_and_segment_dist((w['y'], w['y'] + w['h']),
+																	   (m['yt'], m['yb']))[0]
+			ol_area = x_size * y_size
+		else:
+			ol_area = 0
+
+		if ol_area > half_w_area:
+			return m_id, True
+
+		if ol_area > best_ol_area:
+			best_ol_area = ol_area
+			best_m_id = m_id
+
+	if best_m_id:
+		return best_m_id, True
+	else:
+		best_dist = 1000000
+		for m_id, m in enumerate(monitors):
+			dist = get_distance_of_two_non_overlapping_rectangles(
+				{"xl": w['x'], "yt": w['y'], 'xr': w['x'] + w['w'], "yb": w['y'] + w['h']},
+				{"xl": m['xl'], "yt": m['yt'], 'xr': m['xl'] + m['w'], "yb": m['yt'] + m['h']}
+			)
+			if dist < best_dist:
+				best_m_id = -m_id
+				best_dist = dist
+		return best_m_id, False
+
+# get overlapping factor as a percentual value
+def get_overlapping_factor_of_two_monitors(m1, m2, dir_tp):
+
+	if dir_tp == DirectionType.LEFT or dir_tp == DirectionType.RIGHT:
+		p1, p2, p3, p4 = m1['yt'], m1['yb'], m2['yt'], m2['yb']
+		minimum = min(m1['h'], m2['h'])
+	else:
+		p1, p2, p3, p4 = m1['xl'], m1['xr'], m2['xl'], m2['xr']
+		minimum = min(m1['w'], m2['w'])
+
+	size = get_size_of_segment_intersection_and_segment_dist((p1, p2), (p3, p4))[0]
+	return size / minimum * 100
+
+def monitors_match_vertically(m1, m2):
+	for y in [ m1['yt'], m1['ym'], m1['yb'] ]:
+		if y >= m2['yt'] and y <= m2['yb']:
+			return True
+	return False
+
+def monitors_match_horizontally(m1, m2):
+	for x in [ m1['xl'], m1['xm'], m1['xr'] ]:
+		if x >= m2['xl'] and x <= m2['xr']:
+			return True
+	return False
+
+def get_horizontal_distance(m_left, m_right):
+	if m_left['xr'] > m_right['xl']:
+		return None
+	return abs(m_right['xl'] - m_left['xr'])
+
+def get_vertical_distance(m_up, m_down):
+	if m_up['yb'] > m_down['yt']:
+		return None
+	return abs(m_up['yb'] - m_down['yt'])
+
+def get_distance(m1, m2, dir_tp):
+	if dir_tp == DirectionType.UP:
+		dist = get_vertical_distance(m_up=m2, m_down=m1)
+	elif dir_tp == DirectionType.DOWN:
+		dist = get_vertical_distance(m_up=m1, m_down=m2)
+	elif dir_tp == DirectionType.LEFT:
+		dist = get_horizontal_distance(m_left=m2, m_right=m1)
+	elif dir_tp == DirectionType.RIGHT:
+		dist = get_horizontal_distance(m_left=m1, m_right=m2)
+	return dist
+
+def get_requested_monitor(dir_tp, monitors, curr_mon_id):
+	best_match = -1
+	best_dist = 10000000
+	curr_mon = monitors[curr_mon_id];
+
+	for m_id, m in enumerate(monitors):
+		if m_id == curr_mon_id:
+			continue
+		factor = get_overlapping_factor_of_two_monitors(curr_mon, m, dir_tp)
+		if factor > 50:
+			dist = get_distance(curr_mon, m, dir_tp)
+			if (dist == 0):
+				return m_id
+			if (dist == None):
+				continue
+			if (best_dist > dist):
+				best_dist = dist
+				best_match = m_id
+	if best_match == -1:
+		raise Exception("No monitor matches your selection.")
+	return best_match
+
+def	move_windows_to_different_monitor(opts, monitors, windows):
+
+	m_type, value = parse_monitor_value(opts.monitor)
+	if m_type == MonitorType.UINT:
+		if value >= len(monitors):
+			raise Exception("Monitor", value, "does not exist.")
+		dest_mon_id = value
+
+	for w in windows:
+		if m_type != MonitorType.UINT:
+			curr_mon_id, overlapping = get_monitor_where_window_is(w, monitors)
+			# if window is not overlapping with any monitor
+			if not overlapping:
+				# put it on the monitor that is closest
+				dest_mon_id = curr_mon_id
+			else:
+				if m_type == MonitorType.NEXT:
+					dest_mon_id = (curr_mon_id + 1) % len(monitors)
+				elif m_type == MonitorType.DIRECTION:
+					dest_mon_id = get_requested_monitor(value, monitors, curr_mon_id)
+
+		# if the window size exceeds destination monitor's resolution
+		if w['w'] > monitors[dest_mon_id]['w'] or w['h'] > monitors[dest_mon_id]['h']:
+			coords = (0,0)
+		# else put it in the middle
+		else:
+			coords = (monitors[dest_mon_id]['xm'] - (w['w'] / 2),
+					  monitors[dest_mon_id]['ym'] - (w['h'] / 2))
+		if w['wnck_w'].is_fullscreen():
+			w['wnck_w'].set_fullscreen(False)
+
+		move_window(coords, w['xid'], opts.verbose)
+
+def normalize_window(w, screen_w, screen_h, new_x_pos, new_y_pos):
+	if new_x_pos < 0:
+		new_x_pos = 0;
+	elif new_x_pos + w['w'] > screen_w:
+		new_x_pos = screen_w - w['w']
+
+	if new_y_pos < 0:
+		new_y_pos = 0
+	elif new_y_pos + w['h'] > screen_h:
+		new_y_pos = screen_h - w['h']
+
+	return new_x_pos, new_y_pos
+
+def shift_windows(opts, monitors, windows, screen_w, screen_h):
+
+	x_shift, y_shift = parse_shift_value(opts.shift)
+
+	for w in windows:
+		if opts.verbose:
+			print("window geo: ", w['w'], " ", w['h'], ", ", w['x'], "x", w['y'], sep='')
+
+		curr_mon_id = None
+		if x_shift['tp'] == ValueType.PERCENTS:
+			curr_mon_id, _ = get_monitor_where_window_is(w, monitors)
+			new_x_pos = w['x'] + x_shift['val'] * int(monitors[curr_mon_id]['w'] / 100)
+		else:
+			new_x_pos = w['x'] + x_shift['val']
+		if y_shift['tp'] == ValueType.PERCENTS:
+			if not curr_mon_id:
+				curr_mon_id, _ = get_monitor_where_window_is(w, monitors)
+			new_y_pos = w['y'] + y_shift['val'] * int(monitors[curr_mon_id]['h'] / 100)
+		else:
+			new_y_pos = w['y'] + y_shift['val']
+
+		if opts.verbose:
+			print("new position of window: ",
+				  new_x_pos, "x", new_y_pos, sep='')
+
+		# normalize
+		if opts.norm:
+			new_x_pos, new_y_pos = normalize_window(w, screen_w, screen_h,
+													new_x_pos, new_y_pos)
+			if opts.verbose:
+				print("new position of window after normalization: ",
+					  new_x_pos, "x", new_y_pos, sep='')
+
+		if opts.verbose:
+			print("xid:", w['xid'])
+
+		if w['wnck_w'].is_fullscreen():
+			w['wnck_w'].set_fullscreen(False)
+
+		if w['t_frame']:
+			new_y_pos += w['t_frame']
+		if w['l_frame']:
+			new_x_pos += w['l_frame']
+		move_window((new_x_pos, new_y_pos), w['xid'], opts.verbose)
+
+
+def main():
+
+	try:
+		opts = parse_argv()
+	except Exception as msg:
+		print(msg, file=sys.stderr)
+		return 2
+
+	ret = 0
+
+	if Gtk.get_minor_version() >= 22:
+		monitors = get_monitor_data_gdk_ge_v22()
+	else:
+		monitors = get_monitor_data_gdk_lt_v22()
+	if opts.verbose:
+		for id, data in enumerate(monitors):
+			print("Monitor #", id, ", ", end='', sep='')
+			print("w: ", data['w'], ", h: ", data['h'],
+				  ", x: ", data['xl'], ", y: ", data['yt'], sep='')
+
+	if len(monitors) == 0:
+		raise Exception("No monitors available.")
+
+	windows, screen = get_windows(opts.window, opts.verbose)
+	if len(windows) == 0:
+		raise Exception("No windows match your request.")
+
+	if opts.shift:
+		w, h = compute_screen_resolution(monitors)
+		shift_windows(opts, monitors, windows, w, h)
+	elif opts.monitor:
+		move_windows_to_different_monitor(opts, monitors, windows)
+
+ret = main()
+sys.exit(ret)
