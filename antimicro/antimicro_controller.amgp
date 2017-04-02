@@ -117,6 +117,15 @@
             <axis index="27">
                 <throttle>normal</throttle>
             </axis>
+            <button index="2">
+                <slots>
+                    <slot>
+                        <path>/usr/local/bin/movewin</path>
+                        <arguments>--window &quot;:ACTIVE:&quot; --monitor &quot;:NEXT:&quot;</arguments>
+                        <mode>execute</mode>
+                    </slot>
+                </slots>
+            </button>
             <button index="5">
                 <slots>
                     <slot>

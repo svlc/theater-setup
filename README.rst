@@ -450,9 +450,9 @@ Configure
         *
         *
       + * L3 button
+        * move active window to the next monitor
         * none
-        *
-        *
+        * invokes :code:`movewin --window ":ACTIVE:" --monitor ":NEXT:"`
 
 
 
