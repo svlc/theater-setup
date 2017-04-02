@@ -479,9 +479,9 @@ Configure
 
 You can change some key bindings for your keypad by editing the ``~/mplayer/input.conf`` file.
 
-   The predefined setup looks like this:
+The predefined setup looks like this:
 
-   .. image:: figures/evolveo_wn160.png
+.. image:: figures/evolveo_wn160.png
 
 
 TODO
