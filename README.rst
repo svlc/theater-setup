@@ -82,6 +82,9 @@ The `Bluetooth controller installation steps`_ section describes how to connect 
 `PS3 navigation controller <http://us.playstation.com/ps3/accessories/playstation-move-navigation-controller-ps3.html>`_
 that is supported since the 4.2 version of the Linux kernel (released in January 2012).
 
+The `Numeric keypad installation steps`_ section describes how to connect wireless numeric keypad
+`EVOLVEO WN160 <http://www.evolveo.eu/en/WN160>`_.
+
 
 Installation
 ------------
@@ -99,6 +102,10 @@ Bluetooth remote controller dependencies
 * zenity
 * antimicro (software for managing mappings of your remote controller)
 * bluez (bluetooth stack), bluez-utils
+* pygobject (python bindings for GObject library)
+
+Numeric keypad dependencies
+###########################
 * pygobject (python bindings for GObject library)
 
 
@@ -446,6 +453,36 @@ Configure
         * none
         *
         *
+
+
+
+Numeric keypad installation steps
+=================================
+
+This section describes how to configure the wireless numeric keypad ``EVOLVEO WN160``, but the process should be very similar to all numeric keypads.
+
+Install all dependencies
+########################
+
+Install all dependencies described in the `Numeric keypad dependencies`_ section.
+
+Install
+#######
+
+.. code:: bash
+
+   # invoke under root
+   install -D -m 755 scripts/movewin /usr/local/bin/
+
+Configure
+#########
+
+You can change some key bindings for your keypad by editing the ``~/mplayer/input.conf`` file.
+
+   The predefined setup looks like this:
+
+   .. image:: figures/evolveo_wn160.png
+
 
 TODO
 ----

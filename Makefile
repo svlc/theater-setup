@@ -55,6 +55,10 @@ pdf:	$(PDF_FILES)
 
 png:	 $(PNG_FILES)
 
+
+figures/evolveo_wn160.png: figures/evolveo_wn160.svg
+	inkscape -f $< -e $(@) --export-width=600;
+
 figures/ps3_navigation_controller.png: figures/ps3_navigation_controller.svg
 	inkscape -f $< -e $(@) --export-width=600;
 
