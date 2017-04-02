@@ -20,3 +20,6 @@ ass=yes
 ass-color=0xFFEF0000
 ass-border-color=0x00000020
 subfont-text-scale=6.5 # sub size
+
+framedrop="1"
+cache="8192"
