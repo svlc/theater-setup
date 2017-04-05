@@ -103,10 +103,12 @@ Bluetooth remote controller dependencies
 * antimicro (software for managing mappings of your remote controller)
 * bluez (bluetooth stack), bluez-utils
 * pygobject (python bindings for GObject library)
+* xdotool
 
 Numeric keypad dependencies
 ###########################
 * pygobject (python bindings for GObject library)
+* xdotool
 
 
 Tree structure
