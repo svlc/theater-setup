@@ -448,64 +448,64 @@ Configure
 
 Configure the ``/usr/local/etc/antimicro_controller.amgp`` antimicro config using the ``antimicro`` program.
 
-   The predefined setup looks like this:
+The predefined setup looks like this:
 
-   .. image:: figures/ps3_navigation_controller.png
+.. image:: figures/ps3_navigation_controller.png
 
-   .. list-table::
+.. list-table::
 
-      + * **button**
-        * **action**
-        * **keyboard mapping**
-        * **comment**
-      + * up/down
-        * volume up/down
-        * up/down
-        *
-      + * left/right
-        * seek backward/forward
-        * left/right
-        *
-      + * × button
-        * toggle fullscreen mode
-        * 'f'
-        *
-      + * ◎ button
-        * show elapsed time and total duration
-        * 'P'
-        *
-      + * PS button
-        * unchanged
-        *
-        * turn the controller on, turn the controller off (if pressed for 10+ secs)
-      + * L1 button
-        * pause
-        * space
-        *
-      + * L2 button
-        * pause
-        * space
-        *
-      + * stick left
-        * move active window to the monitor on the left
-        * none
-        * invokes :code:`movewin --window ":ACTIVE:" --monitor ":LEFT:"`
-      + * stick right
-        * move active window to the monitor on the right
-        * none
-        * invokes :code:`movewin --window ":ACTIVE:" --monitor ":RIGHT:"`
-      + * stick up
-        * none
-        *
-        *
-      + * stick down
-        * none
-        *
-        *
-      + * L3 button
-        * move active window to the next monitor
-        * none
-        * invokes :code:`movewin --window ":ACTIVE:" --monitor ":NEXT:"`
+   + * **button**
+     * **action**
+     * **keyboard mapping**
+     * **comment**
+   + * up/down
+     * volume up/down
+     * up/down
+     *
+   + * left/right
+     * seek backward/forward
+     * left/right
+     *
+   + * × button
+     * toggle fullscreen mode
+     * 'f'
+     *
+   + * ◎ button
+     * show elapsed time and total duration
+     * 'P'
+     *
+   + * PS button
+     * unchanged
+     *
+     * turn the controller on, turn the controller off (if pressed for 10+ secs)
+   + * L1 button
+     * pause
+     * space
+     *
+   + * L2 button
+     * pause
+     * space
+     *
+   + * stick left
+     * move active window to the monitor on the left
+     * none
+     * invokes :code:`movewin --window ":ACTIVE:" --monitor ":LEFT:"`
+   + * stick right
+     * move active window to the monitor on the right
+     * none
+     * invokes :code:`movewin --window ":ACTIVE:" --monitor ":RIGHT:"`
+   + * stick up
+     * none
+     *
+     *
+   + * stick down
+     * none
+     *
+     *
+   + * L3 button
+     * move active window to the next monitor
+     * none
+     * invokes :code:`movewin --window ":ACTIVE:" --monitor ":NEXT:"`
 
 
 
