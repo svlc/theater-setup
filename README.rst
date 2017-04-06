@@ -163,29 +163,29 @@ of all configuration keys. Then edit the values of these keys in the ``gsettings
 
 This table describes all ``gsettings`` keys:
 
-   .. list-table::
+.. list-table::
 
-      + * **key name in GSettings schema**
-        * **used by script**
-        * **comment**
-      + * tv-start-xrandr-options
-        * tv
-        *
-      + * tv-stop-xrandr-options
-        * tv
-        *
-      + * pulseaudio-primary-sink
-        * speaker
-        *
-      + * pulseaudio-secondary-sink
-        * speaker
-        *
-      + * bluetooth-adapter-mac-address
-        * controller
-        * Set only if you intend to use a bluetooth controller.
-      + * bluetooth-controller-mac-address
-        * controller
-        * Set only if you intend to use a bluetooth controller.
+   + * **key name in GSettings schema**
+     * **used by script**
+     * **comment**
+   + * tv-start-xrandr-options
+     * tv
+     *
+   + * tv-stop-xrandr-options
+     * tv
+     *
+   + * pulseaudio-primary-sink
+     * speaker
+     *
+   + * pulseaudio-secondary-sink
+     * speaker
+     *
+   + * bluetooth-adapter-mac-address
+     * controller
+     * Set only if you intend to use a bluetooth controller.
+   + * bluetooth-controller-mac-address
+     * controller
+     * Set only if you intend to use a bluetooth controller.
 
 After the whole installation process is finished, you can change any of these keys by using ``gsettings`` command
 or by a widely-used graphical program ``dconf-editor``.
