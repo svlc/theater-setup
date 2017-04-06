@@ -6,6 +6,32 @@ function usage() {
     exit "$1";
 }
 
+function get_gsettings_value()
+{
+	schema=$1
+	key=$2
+	local __result=$3
+
+	value=$(gsettings get "$schema" "$key")
+	ret=$?
+	if test 127 -eq $ret; then
+		printf "error: \"gsettings\" command not found.\n" 2> /dev/null
+		return 1
+	fi
+	if test 0 -ne $ret; then
+		printf "error: \"gsettings get %s %s\" failed.\n" "$schema" "$key" 2> /dev/null
+		return 1
+	fi
+	value=$( echo "$value" | sed -r "s/@[^ ]* '*([^']*)'*/\1/" )
+	if test "$value" = "nothing" || test -z "$value"; then
+		printf "error: \"gsettings get %s %s\" returned empty value.\n" "$schema" "$key" 2> /dev/null
+		return 1
+	else
+		eval $__result="'$value'"
+		return 0
+	fi
+}
+
 function controller_connection_countdown()
 {
     for ((i=0,val=20; i<=100; i+=5, --val)); do
@@ -206,15 +232,32 @@ function main()
                 exit 1;
         fi
 
-        bash_adapter_mac_addr="5C:F3:70:6C:2E:8B"
-        bash_controller_mac_addr="00:07:04:EF:38:C3"
+        bluetooth_adapter_mac_addr=""
+        bluetooth_controller_mac_addr=""
+
+		if test -z "$adapter_mac_addr"; then
+			get_gsettings_value com.github.svlc.theater-setup \
+							  bluetooth-adapter-mac-address bluetooth_adapter_mac_addr
+			if test 0 -ne $?; then
+				exit 1
+			fi;
+		fi;
+
+		if test -z "$controller_mac_addr"; then
+			get_gsettings_value com.github.svlc.theater-setup \
+							  bluetooth-controller-mac-address bluetooth_controller_mac_addr
+			if test 0 -ne $?; then
+				exit 1
+			fi;
+		fi;
+
 
         if [ "$1" = "-h" ]; then
                 usage 0
         elif [ "$1" = "stop" ]; then
-                disconnect $bash_adapter_mac_addr $bash_controller_mac_addr
+                disconnect $bluetooth_adapter_mac_addr $bluetooth_controller_mac_addr
         elif [ "$1" = "start" ]; then
-                connect $bash_adapter_mac_addr $bash_controller_mac_addr
+                connect $bluetooth_adapter_mac_addr $bluetooth_controller_mac_addr
         else
                 printf "error: an unrecognized argument.\n"
                 exit 1;

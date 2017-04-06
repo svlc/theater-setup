@@ -1,0 +1,10 @@
+[com.github.svlc.theater-setup]
+tv-start-xrandr-options='--output DVI-0 --auto --output HDMI-0 --auto --right-of DVI-0'
+tv-stop-xrandr-options='--output DVI-0 --auto --output HDMI-0 --off'
+
+pulseaudio-primary-sink='alsa_output.pci-0000_00_1b.0.analog-stereo'
+pulseaudio-secondary-sink='alsa_output.pci-0000_01_00.1.hdmi-stereo'
+
+# set these two values only if you intend to use a bluetooth remote controller
+bluetooth-adapter-mac-address='5C:F3:70:6C:2E:8B'
+bluetooth-controller-mac-address='00:07:04:EF:38:C3'

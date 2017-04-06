@@ -15,10 +15,6 @@ A set of simple scripts, config files, data and instructions
 for transforming a Linux PC (possibly with a TV) into
 a clickable environment for playing videos.
 
-Note that the setup is bound to the author's computer and some
-(possibly small) changes need to be made in order to make it
-operational on other machines.
-
 A configuration is recommended to experienced ``UNIX`` users only.
 
 .. image:: figures/screenshot_1_small.png
@@ -95,6 +91,7 @@ Dependencies
 * xrandr
 * mplayer
 * pulseaudio
+* glib2 (optional, to enable configuration using GSettings)
 
 Bluetooth remote controller dependencies
 ########################################
@@ -148,9 +145,58 @@ This tree shows where the distributed files should end up.
                       ├── theater-setup-tv-stop.png
                       ├── [theater-setup-controller-start.png]
                       └── [theater-setup-controller-stop.png]
+          └── glib-2.0
+              └── schemas
+                  ├── [com.github.svlc.theater-setup.gschema.xml]
+                  └── [com.github.svlc.theater-setup.gschema.override]
 
 Installation steps
 ==================
+
+Configure settings
+##################
+
+The project uses `GSettings <https://developer.gnome.org/GSettings/>`_ to manage all settings.
+
+As a first step, see the ``gsettings/com.github.svlc.theater-setup.gschema.xml`` file for a detailed description
+of all configuration keys. Then edit the values of these keys in the ``gsettings/com.github.svlc.theater-setup.gschema.override`` file.
+
+This table describes all ``gsettings`` keys:
+
+   .. list-table::
+
+      + * **key name in GSettings schema**
+        * **used by script**
+        * **comment**
+      + * tv-start-xrandr-options
+        * tv
+        *
+      + * tv-stop-xrandr-options
+        * tv
+        *
+      + * pulseaudio-primary-sink
+        * speaker
+        *
+      + * pulseaudio-secondary-sink
+        * speaker
+        *
+      + * bluetooth-adapter-mac-address
+        * controller
+        * Set only if you intend to use a bluetooth controller.
+      + * bluetooth-controller-mac-address
+        * controller
+        * Set only if you intend to use a bluetooth controller.
+
+After the whole installation process is finished, you can change any of these keys by using ``gsettings`` command
+or by a widely-used graphical program ``dconf-editor``.
+
+.. code:: bash
+
+  $ gsettings get com.github.svlc.theater-setup bluetooth-controller-mac-address
+  @ms '00:00:00:00:00:00'
+
+  # notice the double quotes
+  $ gsettings set com.github.svlc.theater-setup bluetooth-controller-mac-address "'00:07:04:EF:38:C3'"
 
 Install
 #######
@@ -187,14 +233,20 @@ Install
   # invoke under root
   $ gtk-update-icon-cache -f /usr/share/icons/hicolor/
 
-Configure
-#########
-Now when the installed files have the right path structure, make a changes
-so that the scripts and configuration files suite your machine, especially:
+.. code:: bash
 
-* tv -- modify options of ``xrandr``
-* .mplayer/config
-* speaker -- assign ``$tv_sink`` and ``$pc_sink`` variables
+   # under root
+   # install GSettings schema and schema override file
+   $ install -m 644 gsettings/{com.github.svlc.theater-setup.gschema.xml,com.github.svlc.theater-setup.gschema.override} /usr/share/glib-2.0/schemas
+
+   # under root
+   # compile all schemas into binary file
+   $ glib-compile-schemas /usr/share/glib-2.0/schemas
+
+Configure mplayer settings
+##########################
+Modify ``~/.mplayer/config`` and ``~/.mplayer/input.conf`` configuration files
+according to your needs.
 
 Tweak display manager
 #####################
@@ -347,8 +399,7 @@ Setup a trusted bluetooth connection
    [bluetooth]# exit
    [DEL] Controller 5C:F3:70:6C:2E:8B system [default]
 
-Now you can edit the definition of ``$bash_adapter_mac_addr`` and ``$bash_controller_mac_addr`` variables
-in the ``controller`` script (located in ``scripts/`` directory) and test it.
+Now you can test if the ``controller`` script (located in ``scripts/`` directory) works flawlessly.
 
 Note
 ~~~~
@@ -393,9 +444,7 @@ Install
 Configure
 #########
 
-1. Edit the controller script -- mainly the MAC addresses and try it out.
-
-2. Configure the ``/usr/local/etc/antimicro_controller.amgp`` antimicro config using the ``antimicro`` program.
+Configure the ``/usr/local/etc/antimicro_controller.amgp`` antimicro config using the ``antimicro`` program.
 
    The predefined setup looks like this:
 

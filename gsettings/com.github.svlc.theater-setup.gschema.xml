@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schemalist>
+
+  <schema path="/com/github/svlc/theater-setup/" id="com.github.svlc.theater-setup">
+
+    <key type="ms" name="tv-start-xrandr-options">
+      <default>nothing</default>
+      <summary>xrandr options for turning a TV on</summary>
+      <description>
+				An options for the xrandr command that will turn a TV on.
+				Example: --output DVI-0 --auto --output HDMI-0 --auto --right-of DVI-0
+      </description>
+    </key>
+
+    <key type="ms" name="tv-stop-xrandr-options">
+      <default>nothing</default>
+      <summary>xrandr options for turning a TV off</summary>
+      <description>
+				An options for the xrandr command that will turn a TV off.
+				Example: --output DVI-0 --auto --output HDMI-0 --off
+      </description>
+    </key>
+
+    <key type="ms" name="pulseaudio-primary-sink">
+      <default>nothing</default>
+      <summary>default pulseaudio sink</summary>
+      <description>
+				A name of primary pulseaudio sink (typically a sink of your PC).
+				To list all available sinks, invoke "pacmd list-sinks | grep "name:"
+				Example: alsa_output.pci-0000_00_1b.0.analog-stereo
+      </description>
+    </key>
+
+    <key type="ms" name="pulseaudio-secondary-sink">
+      <default>nothing</default>
+      <summary>secondary pulseaudio sink</summary>
+      <description>
+				A name of secondary pulseaudio sink (typically a sink of a TV).
+				To list all available sinks, invoke "pacmd list-sinks | grep "name:"
+				Example: alsa_output.pci-0000_01_00.1.hdmi-stereo
+      </description>
+    </key>
+
+    <key type="ms" name="bluetooth-adapter-mac-address">
+      <default>nothing</default>
+      <summary>bluetooth adapter's MAC address</summary>
+      <description>
+				A MAC address of a bluetooth adapter.
+				To obtain a MAC address, use command bluetoothctl.
+
+				If you don't intend to use a bluetooth remote controller,
+				do not set this value.
+      </description>
+    </key>
+
+    <key type="ms" name="bluetooth-controller-mac-address">
+      <default>nothing</default>
+      <summary>bluetooth controller's MAC address</summary>
+      <description>
+				A MAC address of a bluetooth remote controller.
+				To obtain a MAC address, use command bluetoothctl.
+
+				If you don't intend to use a bluetooth remote controller,
+				do not set this value.
+      </description>
+    </key>
+
+  </schema>
+
+</schemalist>

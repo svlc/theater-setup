@@ -6,23 +6,70 @@ function usage() {
 	exit "$1";
 }
 
+function get_gsettings_value()
+{
+	schema=$1
+	key=$2
+	local __result=$3
+
+	value=$(gsettings get "$schema" "$key")
+	ret=$?
+	if test 127 -eq $ret; then
+		printf "error: \"gsettings\" command not found.\n" 2> /dev/null
+		return 1
+	fi
+	if test 0 -ne $ret; then
+		printf "error: \"gsettings get %s %s\" failed.\n" "$schema" "$key" 2> /dev/null
+		return 1
+	fi
+	value=$( echo "$value" | sed -r "s/@[^ ]* '*([^']*)'*/\1/" )
+	if test "$value" = "nothing" || test -z "$value"; then
+		printf "error: \"gsettings get %s %s\" returned empty value.\n" "$schema" "$key" 2> /dev/null
+		return 1
+	else
+		eval $__result="'$value'"
+		return 0
+	fi
+}
+
 function main()
 {
 	if [ "$#" -ne "1" ]; then
-		printf "error: a wrong number of arguments.\n"
+		printf "error: a wrong number of arguments.\n" 2> /dev/null
 		exit 1;
 	fi
 
+	xrandr_start_options=""
+	xrandr_stop_options=""
+
 	if [ "$1" = "-h" ]; then
 		usage 0
-	elif [ "$1" = "stop" ]; then
-		# turn the tv screen off
-		xrandr --verbose --output DVI-0 --auto --output HDMI-0 --off;
+	fi
+
+	if [ "$1" = "stop" ]; then
+		# if empty, load value from gsettings
+		if test -z "$xrandr_stop_options"; then
+			get_gsettings_value com.github.svlc.theater-setup \
+							  tv-stop-xrandr-options xrandr_stop_options
+			if test 0 -ne $?; then
+				exit 1
+			fi;
+		fi;
+		printf "xrandr %s\n" "$xrandr_stop_options" 2> /dev/null
+		xrandr $xrandr_stop_options
 	elif [ "$1" = "start" ]; then
-		# put a tv screen next to the monitor screen
-		xrandr --verbose --output DVI-0 --auto --output HDMI-0 --auto --right-of DVI-0;
+		# if empty, load value from gsettings
+		if test -z "$xrandr_start_options"; then
+			get_gsettings_value com.github.svlc.theater-setup \
+							  tv-start-xrandr-options xrandr_start_options
+			if test 0 -ne $?; then
+				exit 1
+			fi
+		fi
+		printf "xrandr %s\n" "$xrandr_start_options" 2> /dev/null
+		xrandr $xrandr_start_options
 	else
-		printf "error: an unrecognized argument.\n"
+		printf "error: an unrecognized argument.\n" 2> /dev/null
 		exit 1;
 	fi
 
