@@ -187,6 +187,8 @@ This table describes all ``gsettings`` keys:
      * controller
      * Set only if you intend to use a bluetooth controller.
 
+Note
+~~~~
 After the whole installation process is finished, you can change any of these keys by using ``gsettings`` command
 or by a widely-used graphical program ``dconf-editor``.
 
