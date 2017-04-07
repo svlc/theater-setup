@@ -486,7 +486,7 @@ Configure the ``/usr/local/etc/antimicro_controller.amgp`` antimicro config usin
 
 The predefined setup looks like this:
 
-.. image:: figures/ps3_navigation_controller.png
+.. image:: figures/ps3_navigation_controller_bindings.png
 
 .. list-table::
 
@@ -570,7 +570,7 @@ You can change some key bindings for your keypad by editing the ``~/mplayer/inpu
 
 The predefined setup looks like this:
 
-.. image:: figures/evolveo_wn160.png
+.. image:: figures/evolveo_wn160_bindings.png
 
 
 TODO

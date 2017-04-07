@@ -55,11 +55,10 @@ pdf:	$(PDF_FILES)
 
 png:	 $(PNG_FILES)
 
-
-figures/evolveo_wn160.png: figures/evolveo_wn160.svg
+figures/evolveo_wn160_bindings.png: figures/evolveo_wn160_bindings.svg
 	inkscape -f $< -e $(@) --export-width=600;
 
-figures/ps3_navigation_controller.png: figures/ps3_navigation_controller.svg
+figures/ps3_navigation_controller_bindings.png: figures/ps3_navigation_controller_bindings.svg
 	inkscape -f $< -e $(@) --export-width=600;
 
 figures/theater_setup.png: figures/theater_setup.svg
