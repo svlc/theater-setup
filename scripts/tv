@@ -42,7 +42,7 @@ function main()
 	xrandr_start_options=""
 	xrandr_stop_options=""
 
-	if [ "$1" = "-h" ]; then
+	if [ "$1" = "-h" -o "$1" = "--help" ]; then
 		usage 0
 	fi
 

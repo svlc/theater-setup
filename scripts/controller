@@ -231,6 +231,9 @@ function main()
                 printf "error: a wrong number of arguments.\n"
                 exit 1;
         fi
+        if [ "$1" = "-h" -o "$1" = "--help" ]; then
+                usage 0
+        fi
 
         bluetooth_adapter_mac_addr=""
         bluetooth_controller_mac_addr=""
@@ -251,10 +254,7 @@ function main()
 			fi;
 		fi;
 
-
-        if [ "$1" = "-h" ]; then
-                usage 0
-        elif [ "$1" = "stop" ]; then
+        if [ "$1" = "stop" ]; then
                 disconnect $bluetooth_adapter_mac_addr $bluetooth_controller_mac_addr
         elif [ "$1" = "start" ]; then
                 connect $bluetooth_adapter_mac_addr $bluetooth_controller_mac_addr

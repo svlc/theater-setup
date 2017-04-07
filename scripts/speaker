@@ -42,7 +42,7 @@ function main()
 	tv_sink=""
 	pc_sink=""
 
-	if [ "$1" = "-h" ]; then
+	if [ "$1" = "-h" -o "$1" = "--help" ]; then
 		usage 0;
 	elif [ "$1" = "pc" ]; then
 		if test -z "$pc_sink"; then
