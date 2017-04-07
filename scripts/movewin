@@ -371,7 +371,7 @@ def get_requested_monitor(dir_tp, monitors, curr_mon_id):
 		raise Exception("No monitor matches your selection.")
 	return best_match
 
-def	move_windows_to_different_monitor(opts, monitors, windows):
+def move_windows_to_different_monitor(opts, monitors, windows):
 
 	m_type, value = parse_monitor_value(opts.monitor)
 	if m_type == MonitorType.UINT:
