@@ -18,8 +18,13 @@ a clickable environment for playing videos.
 A configuration is recommended to experienced ``UNIX`` users only.
 
 .. image:: figures/screenshot_1_small.png
-   :height: 200px
    :target: figures/screenshot_1.png
+
+.. image:: figures/evolveo_wn160.png
+   :target: figures/evolveo_wn160.png
+
+.. image:: figures/ps3_navigation_controller.png
+   :target: figures/ps3_navigation_controller.png
 
 Features
 ========
