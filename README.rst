@@ -43,10 +43,48 @@ Description
 
 Scripts
 =======
-* tv [start|stop] -- turn a HDMI-connected tv on/off by using xrandr
-* speaker [pc|tv] -- switch sound output between a PC and a TV speakers
-* submplay VIDEO_FILE -- wrapper for mplayer with automatic subtitle lookout
-* controller [start|stop] -- turn a bluetooth controller on/off
+The project contains several scripts that are located in the ``script/`` directory.
+
+You can invoke any script with the :code:`--help` option to print a detailed usage info.
+
+tv
+###
+The ``tv`` script turns a tv connection on/off by using the ``xrandr`` command.
+
+.. code:: bash
+
+  $ tv start
+  $ tv stop
+
+speaker
+#######
+
+The ``speaker`` script switches a sound output between a PC and a TV speakers.
+
+.. code:: bash
+
+  $ speaker tv
+  $ speaker pc
+
+submplay
+########
+
+The ``submplay`` script opens a passed video file in ``mplayer``, possibly with a corresponding subtitle file.
+A name of subtitle file is gained by replacing the extension of video file with the ``.srt`` extension.
+
+.. code:: bash
+
+  # open a "movie.mp4" file in mplayer with a corresponding "movie.srt" subtitle file if present
+  $ submplay movie.mp4
+
+controller
+##########
+The ``controller`` script turns a bluetooth controller on/off with the help of the ``bluetoothctl`` command.
+
+.. code:: bash
+
+  $ controller start
+  $ controller stop
 
 
 movewin
@@ -56,11 +94,9 @@ The script ``movewin`` moves application windows across your screen.
 .. code:: bash
 
   # move all mplayer instances to a monitor on the right
-  movewin --window mplayer --monitor ":RIGHT:"
+  $ movewin --window mplayer --monitor ":RIGHT:"
   # move the currently active window 200 pixels to the right and 10% up
-  movewin --window ":ACTIVE:" --shift "200x-10%"
-
-For more info invoke :code:`movewin --help`.
+  $ movewin --window ":ACTIVE:" --shift "200x-10%"
 
 Icons
 =====
