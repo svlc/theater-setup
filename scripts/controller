@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 
 function usage() {
-    printf "Turn the bluetooth controller connection  on/off\n"
-    printf "Usage: %s [start|stop]\n" "$(basename "$0")";
+    printf "Turn the bluetooth controller connection  on/off.\n"
+    printf "Usage: %s [start | stop]\n" "$(basename "$0")";
     exit "$1";
 }
 

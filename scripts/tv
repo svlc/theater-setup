@@ -2,7 +2,7 @@
 
 function usage() {
 	printf "Turn the tv connection on/off by invoking xrandr command.\n"
-	printf "Usage: %s [start|stop]\n" "$(basename "$0")";
+	printf "Usage: %s [start | stop]\n" "$(basename "$0")";
 	exit "$1";
 }
 

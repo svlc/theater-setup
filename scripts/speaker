@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function usage() {
-	printf "Switch between pc and tv sound outputs on a pulseaudio level .\n"
-	printf "Usage: %s [pc|tv]\n" "$(basename "$0")";
+	printf "Switch between pc and tv sound outputs on a pulseaudio level.\n"
+	printf "Usage: %s [pc | tv]\n" "$(basename "$0")";
 	exit "$1";
 }
 
