@@ -2,7 +2,8 @@
 
 function usage()
 {
-	printf "Open a VIDEO_FILE in mplayer with a matching subtitle file.\n"
+	printf "Open a VIDEO_FILE in mplayer with a corresponding subtitle file.\n"
+	printf "A name of subtitle file is gained by replacing an extension of VIDEO_FILE with the \".srt\" extension.\n"
 	printf "Usage: %s VIDEO_FILE\n" "$(basename "$0")";
 	exit "$1";
 }
