@@ -69,7 +69,7 @@ You can invoke any script with the :code:`--help` option to print a detailed usa
 
 tv
 ###
-The ``tv`` script turns a tv connection on/off by using the ``xrandr`` command.
+The ``tv`` script turns a tv connection on/off.
 
 .. code:: bash
 
@@ -99,7 +99,7 @@ A name of subtitle file is gained by replacing the extension of video file with 
 
 controller
 ##########
-The ``controller`` script turns a bluetooth controller on/off with the help of the ``bluetoothctl`` command.
+The ``controller`` script turns a bluetooth controller on/off.
 
 .. code:: bash
 
