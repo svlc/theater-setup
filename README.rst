@@ -11,9 +11,9 @@ theater-setup
 Intro
 -----
 
-A set of simple scripts, config files, data and instructions
-for transforming a Linux PC (possibly with a TV) into
-a clickable environment for playing videos.
+A set of scripts, configuration files, data and instructions
+for transforming a Linux-based PC (possibly with a TV and a remote controller)
+into an easy-to-use environment for playing videos.
 
 A configuration is recommended to experienced ``UNIX`` users only.
 
@@ -28,20 +28,17 @@ A configuration is recommended to experienced ``UNIX`` users only.
 
 Features
 ========
-* easy to use for a common computer users
+* easy-to-use for an ordinary computer user
 * clickable redirecting of sound output between a computer and a TV
 * clickable turning of TV connection on/off
 * automatic subtitle loading
-* manageable using remote controller
+* manageable by using remote controllers
 
 Typical use case
 ================
 You have a ``Linux``-based computer connected to a TV and you need
-to setup a simple environment that can be used by people without
+to setup a simple environment that can be used also by a people without
 an IT background.
-
-These common users may then redirect a video output to the TV screen
-by mouse clicking only and use a remote controller/keypad to control it from a distance.
 
 Description
 -----------
