@@ -184,10 +184,10 @@ This tree shows where the distributed files should end up.
               ├── tv
               ├── speaker
               ├── submplay
-              ├── [controller]
-              └── [winmove]
+              ├── controller
+              └── winmove
           └── etc
-              └── [antimicro_controller.amgp]
+              └── antimicro_controller.amgp
       └── share
           └── icons
               └── hicolor
@@ -196,12 +196,12 @@ This tree shows where the distributed files should end up.
                       ├── theater-setup-speaker-tv.png
                       ├── theater-setup-tv-start.png
                       ├── theater-setup-tv-stop.png
-                      ├── [theater-setup-controller-start.png]
-                      └── [theater-setup-controller-stop.png]
+                      ├── theater-setup-controller-start.png
+                      └── theater-setup-controller-stop.png
           └── glib-2.0
               └── schemas
-                  ├── [com.github.svlc.theater-setup.gschema.xml]
-                  └── [com.github.svlc.theater-setup.gschema.override]
+                  ├── com.github.svlc.theater-setup.gschema.xml
+                  └── com.github.svlc.theater-setup.gschema.override
 
 Installation steps
 ==================
