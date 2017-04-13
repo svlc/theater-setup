@@ -52,6 +52,21 @@ The project contains several scripts that are located in the ``script/`` directo
 
 You can invoke any script with the :code:`--help` option to print a detailed usage info.
 
+.. list-table::
+
+   + * **script**
+     * **dependencies**
+   + * `tv`_
+     * bash, xrandr
+   + * `speaker`_
+     * bash, pacmd (part of pulseaudio)
+   + * `submplay`_
+     * mplayer
+   + * `controller`_
+     * bash, expect, zenity, bluetoothctl (part of bluez-utils)
+   + * `movewin`_
+     * python3, xdotool, antimicro, pygobject
+
 tv
 ###
 The ``tv`` script turns a tv connection on/off by using the ``xrandr`` command.
