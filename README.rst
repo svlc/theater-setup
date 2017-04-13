@@ -202,7 +202,7 @@ The project uses `GSettings <https://developer.gnome.org/GSettings/>`_ to manage
 As a first step, see the ``gsettings/com.github.svlc.theater-setup.gschema.xml`` file for a detailed description
 of all configuration keys. Then edit the values of these keys in the ``gsettings/com.github.svlc.theater-setup.gschema.override`` file.
 
-This table describes all ``gsettings`` keys:
+This table describes all relevant ``gsettings`` keys:
 
 .. list-table::
 
