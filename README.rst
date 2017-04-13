@@ -113,10 +113,6 @@ The script ``movewin`` moves application windows across your screen.
   # move the currently active window 200 pixels to the right and 10% up
   $ movewin --window ":ACTIVE:" --shift "200x-10%"
 
-Icons
-=====
-* icons are to be put on user's desktop to allow clickable management of tv, speakers and remote controller
-
 Remote controller support
 =========================
 
