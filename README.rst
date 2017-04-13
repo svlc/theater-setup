@@ -15,8 +15,6 @@ A set of scripts, configuration files, data and instructions
 for transforming a Linux-based PC (possibly with a TV and a remote controller)
 into an easy-to-use environment for playing videos.
 
-A configuration is recommended to experienced ``UNIX`` users only.
-
 .. image:: figures/screenshot_1_small.png
    :target: figures/screenshot_1.png
 
@@ -137,6 +135,7 @@ The `Numeric keypad installation steps`_ section describes how to connect wirele
 
 Installation
 ------------
+Installation and configuration is recommended to experienced ``UNIX`` users only.
 
 Dependencies
 ============
