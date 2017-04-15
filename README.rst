@@ -56,11 +56,11 @@ You can invoke any script with the :code:`--help` option to print a detailed usa
    + * `speaker`_
      * bash, pacmd (part of pulseaudio)
    + * `submplay`_
-     * mplayer
+     * bash, mplayer
    + * `controller`_
-     * bash, expect, zenity, bluetoothctl (part of bluez-utils)
+     * bash, expect, zenity, bluetoothctl (part of bluez-utils), antimicro
    + * `movewin`_
-     * python3, xdotool, antimicro, pygobject
+     * python3, xdotool, pygobject
 
 tv
 ###
