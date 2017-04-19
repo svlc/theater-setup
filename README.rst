@@ -281,12 +281,12 @@ Install
 
 .. code:: bash
 
-   # under root
    # install GSettings schema and schema override file
+   # invoke under root
    $ install -m 644 gsettings/{com.github.svlc.theater-setup.gschema.xml,com.github.svlc.theater-setup.gschema.override} /usr/share/glib-2.0/schemas
 
-   # under root
    # compile all schemas into binary file
+   # invoke under root
    $ glib-compile-schemas /usr/share/glib-2.0/schemas
 
 Configure mplayer settings
