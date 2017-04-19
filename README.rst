@@ -292,7 +292,18 @@ Install
 Configure mplayer settings
 ##########################
 Modify ``~/.mplayer/config`` and ``~/.mplayer/input.conf`` configuration files
-according to your needs.
+according to your needs. The following picture shows the changed key bindings:
+
+.. image:: figures/us_keyboard_bindings.png
+
+Notes
+~~~~~
+* invoke ``mplayer -input keylist`` and ``mplayer -input cmdlist`` to print all available key names and commands, respectively
+* by changing a mappings of several numpad keys (like ``space``, ``+``, ``-``, ``*`` and ``/``), you also influence
+  an action of a corresponding keys in the non-numerical section of your keyboard (while some keys like ``Enter`` have a different representation for a keypad)
+* keys from a stand-alone (cable-connected/wireless) numpad and keys from a numpad section of your keyboard has the same representation
+
+
 
 Tweak display manager
 #####################
