@@ -141,6 +141,8 @@ Dependencies
 * mplayer
 * pulseaudio
 * glib2 (optional, to enable configuration using GSettings)
+* pygobject (python bindings for GObject library)
+* xdotool
 
 Bluetooth remote controller dependencies
 ########################################
@@ -148,14 +150,6 @@ Bluetooth remote controller dependencies
 * zenity
 * antimicro (software for managing mappings of your remote controller)
 * bluez (bluetooth stack), bluez-utils
-* pygobject (python bindings for GObject library)
-* xdotool
-
-Numeric keypad dependencies
-###########################
-* pygobject (python bindings for GObject library)
-* xdotool
-
 
 Tree structure
 ==============
@@ -259,8 +253,9 @@ Install
 
 .. code:: bash
 
-  # install the essential scripts, a default path is ``/usr/local/bin``
-  $ make install-scripts # invoke under root
+  # install the essential scripts
+  # invoke under root
+  $ install -D -m 755 scripts/{tv,speaker,submplay,movewin} /usr/local/bin/
 
 .. code:: bash
 
@@ -469,7 +464,7 @@ Install
 .. code:: bash
 
    # invoke under root
-   install -D -m 755 scripts/{controller,movewin} /usr/local/bin/
+   install -D -m 755 scripts/controller /usr/local/bin/
 
 .. code:: bash
 
@@ -562,19 +557,6 @@ Numeric keypad installation steps
 =================================
 
 This section describes how to configure the wireless numeric keypad ``EVOLVEO WN160``, but the process should be very similar to all numeric keypads.
-
-Install all dependencies
-########################
-
-Install all dependencies described in the `Numeric keypad dependencies`_ section.
-
-Install
-#######
-
-.. code:: bash
-
-   # invoke under root
-   install -D -m 755 scripts/movewin /usr/local/bin/
 
 Configure
 #########
