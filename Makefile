@@ -30,11 +30,15 @@ install-scripts: installdirs
 	$(INSTALL_PROGRAM) scripts/tv $(DESTDIR)/$(bindir)
 	$(INSTALL_PROGRAM) scripts/speaker $(DESTDIR)/$(bindir)
 	$(INSTALL_PROGRAM) scripts/submplay $(DESTDIR)/$(bindir)
+	$(INSTALL_PROGRAM) scripts/movewin $(DESTDIR)/$(bindir)
+	$(INSTALL_PROGRAM) scripts/controller $(DESTDIR)/$(bindir)
 
 uninstall-scripts:
 	rm $(DESTDIR)/$(bindir)/tv
 	rm $(DESTDIR)/$(bindir)/speaker
 	rm $(DESTDIR)/$(bindir)/submplay
+	rm $(DESTDIR)/$(bindir)/movewin
+	rm $(DESTDIR)/$(bindir)/controller
 
 icons:
 	for dim in "16x16" "32x32" "48x48" "64x64" "96x96" "128x128" "192x192" "256x256" "512x512"; do \
