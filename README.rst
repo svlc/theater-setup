@@ -292,7 +292,7 @@ Install
 Configure mplayer settings
 ##########################
 Modify ``~/.mplayer/config`` and ``~/.mplayer/input.conf`` configuration files
-according to your needs. The following picture shows the changed key bindings:
+according to your needs. The following picture shows the changed key bindings compared to the default ones:
 
 .. image:: figures/us_keyboard_bindings.png
 
