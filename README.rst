@@ -316,9 +316,6 @@ these commands into a corresponding pre-login and logout scripts.
   tv stop
   speaker pc
 
-In case of ``GDM`` (``GNOME Display Manager``) these are the ``/etc/gdm/Init/Default``
-and the ``/etc/gdm/PostSession/Default`` files.
-
 Associate
 #########
 Associate some video extensions (avi, ogv, mp4, ...) with the ``submplay`` script.
