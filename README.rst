@@ -175,7 +175,7 @@ This tree shows where the distributed files should end up.
               ├── speaker
               ├── submplay
               ├── controller
-              └── winmove
+              └── movewin
           └── etc
               └── antimicro_controller.amgp
       └── share
