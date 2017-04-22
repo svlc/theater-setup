@@ -59,7 +59,7 @@ pdf:	$(PDF_FILES)
 
 png:	 $(PNG_FILES)
 
-figures/us_keyboard.png: figures/us_keyboard.svg
+figures/us_keyboard_bindings.png: figures/us_keyboard_bindings.svg
 	inkscape -f $< -e $(@) --export-width=900;
 
 figures/evolveo_wn160.png: figures/evolveo_wn160.svg
