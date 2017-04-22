@@ -44,9 +44,9 @@
      id="namedview4"
      showgrid="false"
      inkscape:snap-global="false"
-     inkscape:zoom="0.34769885"
-     inkscape:cx="1025.058"
-     inkscape:cy="901.4794"
+     inkscape:zoom="0.31884997"
+     inkscape:cx="382.10469"
+     inkscape:cy="595.61481"
      inkscape:window-x="0"
      inkscape:window-y="19"
      inkscape:window-maximized="0"
@@ -1068,7 +1068,7 @@
      xml:space="preserve"
      id="flowRoot4799-3-1-9-7-7-3-6"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.25px;line-height:125%;font-family:Sans;-inkscape-font-specification:'Sans, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.03660154px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     transform="matrix(0.49101407,0,0,0.49101407,-1047.5155,229.20807)"><flowRegion
+     transform="matrix(0.49101407,0,0,0.49101407,-1043.2191,229.20807)"><flowRegion
        id="flowRegion4801-5-2-3-3-5-19-7"
        style="line-height:125%;fill:#ffffff;stroke-width:2.03660154px"><rect
          id="rect4803-6-7-6-6-3-4-5"
@@ -1078,4 +1078,4 @@
          y="1143.7275"
          style="line-height:125%;fill:#ffffff;stroke-width:2.03660154px" /></flowRegion><flowPara
        style="font-weight:bold;font-size:74.66666412px;line-height:125%;fill:#ffffff;stroke-width:2.03660154px"
-       id="flowPara5105-5-78-35">move mplayer window on the next monitor</flowPara></flowRoot></svg>
+       id="flowPara5105-5-78-35">move mplayer window to the next monitor</flowPara></flowRoot></svg>
