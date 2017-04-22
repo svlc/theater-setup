@@ -12,7 +12,7 @@ Intro
 -----
 
 A set of scripts, configuration files, data and instructions
-for transforming a Linux-based PC (possibly with a TV and a remote controller)
+for extending a Linux-based PC (possibly with a TV and a remote controller)
 into an easy-to-use environment for playing videos.
 
 .. image:: figures/screenshot_1_small.png
