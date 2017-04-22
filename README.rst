@@ -118,9 +118,9 @@ Remote controller support
 
 There are several types of remote controllers:
 
-* keypads -- easy to setup and low cost
-* bluetooth controllers -- you may need to buy a USB bluetooth dongle, not easy to setup
-* IR controllers
+* keypads -- typically work out-of-a-box and are cheap
+* bluetooth controllers -- mostly require a USB bluetooth dongle, not as easy to configure
+* IR controllers -- require a line of sight to operate
 
 The `Bluetooth controller installation steps`_ section describes how to connect a
 `PS3 navigation controller <http://us.playstation.com/ps3/accessories/playstation-move-navigation-controller-ps3.html>`_
