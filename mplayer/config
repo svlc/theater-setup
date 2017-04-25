@@ -1,25 +1,18 @@
-stop-xscreensaver=yes
-#quiet=yes # does not print info after shortcut press
-#really-quiet=yes # even more
-xy=720 # window size, same aspect-ratio
-loop=0 # repeat playlist
-#geometry=50%:50% # window position
+loop=0 # repeat playlist forever
+xy=600 # set window width to 600 pixels
+# vf-add=expand=-40:0:-1:-1 # apply an expand filter
 
-volstep=10 # volume sensibility
-# startup volume, default = 100; can be deadly when combined with a "softvol-max"
-volume=60
-softvol=yes # required for "softvol-max"
-softvol-max=360
-subcp=utf-8
-zoom=yes
-noautosub=yes # disable automatic sub loading
+softvol=yes # force the use of software mixer (required for "softvol-max")
+softvol-max=300 # set maximum allowed volume level
+volstep=10 # set 10% step size for volume
+volume=15 # set startup volume, can be dangerous when combined with a high "softvol-max"
 
-vf-add=expand=-40:0:-1:-1
+noautosub=yes # disable automatic subtitle file loading
+subcp=utf-8 # set subtitle codepage
+ass=yes # enable SSA/ASS subtitle rendering
+ass-color=FFEF0000 # set yellow subtitle color
+ass-border-color=00000020 # set black outline border color for subtitles
+subfont-text-scale=6.5 # set size for subtitles
 
-ass=yes
-ass-color=0xFFEF0000
-ass-border-color=0x00000020
-subfont-text-scale=6.5 # sub size
-
-framedrop="1"
-cache="8192"
+framedrop=1 # enable frame dropping (good for slower machines)
+cache=8192 # set higher precaching value
