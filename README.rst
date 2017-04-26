@@ -163,6 +163,8 @@ This tree shows where the distributed files should end up.
               ├── config
               └── input.conf
           └── Desktop
+              ├── controller-start.desktop
+              ├── controller-stop.desktop
               ├── speaker-tv.desktop
               ├── speaker-pc.desktop
               ├── tv-start.desktop
