@@ -236,6 +236,7 @@ or by a widely-used graphical program ``dconf-editor``.
 
 .. code:: bash
 
+  # get value of the key "bluetooth-controller-mac-address"
   $ gsettings get com.github.svlc.theater-setup bluetooth-controller-mac-address
   @ms '00:00:00:00:00:00'
 
@@ -470,6 +471,7 @@ Install
 
 .. code:: bash
 
+   # install the script that manages connection with the bluetooth controller
    # invoke under root
    install -D -m 755 scripts/controller /usr/local/bin/
 
@@ -492,6 +494,8 @@ Install
 
 .. code:: bash
 
+   # install the antimicro configuration profile
+   # invoke under root
    $ install -D -m 644 antimicro/antimicro_controller.amgp /usr/local/etc/
 
 Configure
