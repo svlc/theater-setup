@@ -229,8 +229,8 @@ This table describes all relevant ``gsettings`` keys:
      * controller
      * Set only if you intend to use a bluetooth controller.
 
-Note
-~~~~
+Tip
+~~~
 After the whole installation process is finished, you can change any of these keys by using ``gsettings`` command
 or by a widely-used graphical program ``dconf-editor``.
 
@@ -295,8 +295,8 @@ according to your needs. The following picture shows the changed key bindings co
 
 .. image:: figures/us_keyboard_bindings.png
 
-Notes
-~~~~~
+Tips
+~~~~
 * invoke ``mplayer -input keylist`` and ``mplayer -input cmdlist`` to print all available key names and commands, respectively
 * by changing a mappings of several numpad keys (like ``space``, ``+``, ``-``, ``*`` and ``/``), you also influence
   an action of a corresponding keys in the non-numerical section of your keyboard (while some keys like ``Enter`` have a different representation for a keypad)
@@ -454,8 +454,8 @@ Setup a trusted bluetooth connection
 
 Now you can test if the ``controller`` script (located in ``scripts/`` directory) works flawlessly.
 
-Note
-~~~~
+Tip
+~~~
 
 If some problem occurs during the ``bluetoothctl`` setup, just remove the controller and start all over again:
 
